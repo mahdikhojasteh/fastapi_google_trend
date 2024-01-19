@@ -288,6 +288,32 @@ class GoogleTrendsScraper:
         chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument("--disable-infobars")
+
+        from fake_useragent import UserAgent
+        ua = UserAgent()
+
+        # Get a random browser user-agent string
+        random_user_agent = ua.random
+        print(random_user_agent)
+        chrome_options.add_argument(f"--user-agent={random_user_agent}")
+
+
+        # # # from selenium.webdriver.common.proxy import Proxy, ProxyType
+
+        # # # # Set the proxy configuration
+        # # # proxy = Proxy({
+        # # #     'proxyType': ProxyType.MANUAL,
+        # # #     'httpProxy': 'your_http_proxy',  # Replace with your HTTP proxy
+        # # #     'ftpProxy': 'your_ftp_proxy',    # Replace with your FTP proxy
+        # # #     'sslProxy': 'your_https_proxy',  # Replace with your HTTPS proxy
+        # # #     'noProxy': ''  # Use an empty string if you don't want to exclude any addresses from proxying
+        # # # })
+
+        # # # # Create a new WebDriver instance with the proxy configuration
+        # # # driver = webdriver.Chrome(chrome_options=chrome_options, 
+        # # #                           desired_capabilities={"proxy": proxy, "acceptInsecureCerts": True})
+
+
         self.browser = webdriver.Chrome(chrome_options=chrome_options)
         # Define the download behaviour of chrome
         # noinspection PyProtectedMember
@@ -441,6 +467,8 @@ class GoogleTrendsScraper:
             try:
                 # Navigate to the URL
                 self.go_to_url(url)
+                print(self.browser.page_source)
+                time.sleep(1000)
                 # Sleep the code by the defined time plus a random number of seconds between 0s and 2s. This should
                 # reduce the likelihood that Google detects us as a scraper
                 time.sleep(self.sleep + 2 * np.random.rand())
@@ -508,6 +536,8 @@ class GoogleTrendsScraper:
             try:
                 # Navigate to the URL
                 self.go_to_url(url)
+                # # # print(self.browser.page_source)
+                # # # time.sleep(1000)
                 # Sleep the code by the defined time plus a random number of seconds between 0s and 2s. This should
                 # reduce the likelihood that Google detects us as a scraper
                 time.sleep(self.sleep + 2 * np.random.rand())
