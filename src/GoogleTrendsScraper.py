@@ -367,9 +367,12 @@ class GoogleTrendsScraper:
             # # # print(f"url_all_i: {url_all_i}")
             # # # time.sleep(1000)
 
-            data_all_i, frequency_i = self.get_data(url_all_i)
-            related_queries = self.get_related_queries(url_all_i)
-            related_topics = self.get_related_topics(url_all_i)
+            self.go_to_url(url_all_i)
+            print(self.browser.page_source)
+            time.sleep(10)
+            data_all_i, frequency_i = self.get_data()
+            related_queries = self.get_related_queries()
+            related_topics = self.get_related_topics()
             # If the data for the entire sample is already at the daily frequency we are done. Otherwise we need to
             # get the trends for sub-periods
             if frequency_i == 'Daily':
@@ -450,12 +453,10 @@ class GoogleTrendsScraper:
         url = f"{base}?{cat}{date}&{geo}{query}"
         return url
 
-    def get_data(self, url):
+    def get_data(self):
         """
         Method that retrieves for a specific URL the Google Trend data. Note that this is done by downloading a csv-file
         which is then loaded and stored as a pandas.DataFrame object
-        Args:
-            url: URL for the trend to be scraped as a string
 
         Returns: a pandas.DataFrame object containing the trends for the given URL
 
@@ -466,9 +467,9 @@ class GoogleTrendsScraper:
         while button is None:
             try:
                 # Navigate to the URL
-                self.go_to_url(url)
-                print(self.browser.page_source)
-                time.sleep(1000)
+                # # # self.go_to_url(url)
+                # # # print(self.browser.page_source)
+                # # # time.sleep(1000)
                 # Sleep the code by the defined time plus a random number of seconds between 0s and 2s. This should
                 # reduce the likelihood that Google detects us as a scraper
                 time.sleep(self.sleep + 2 * np.random.rand())
@@ -519,12 +520,10 @@ class GoogleTrendsScraper:
                 pass
         return data, frequency
     
-    def get_related_topics(self, url):
+    def get_related_topics(self):
         """
         Method that retrieves for a specific URL the Google Trend data. Note that this is done by downloading a csv-file
         which is then loaded and stored as a pandas.DataFrame object
-        Args:
-            url: URL for the trend to be scraped as a string
 
         Returns: a pandas.DataFrame object containing the related_topics for the given URL
 
@@ -535,7 +534,7 @@ class GoogleTrendsScraper:
         while button is None:
             try:
                 # Navigate to the URL
-                self.go_to_url(url)
+                # # # self.go_to_url(url)
                 # # # print(self.browser.page_source)
                 # # # time.sleep(1000)
                 # Sleep the code by the defined time plus a random number of seconds between 0s and 2s. This should
@@ -561,12 +560,10 @@ class GoogleTrendsScraper:
         
         return data
     
-    def get_related_queries(self, url):
+    def get_related_queries(self):
         """
         Method that retrieves for a specific URL the Google Trend data. Note that this is done by downloading a csv-file
         which is then loaded and stored as a pandas.DataFrame object
-        Args:
-            url: URL for the trend to be scraped as a string
 
         Returns: a pandas.DataFrame object containing the related_queries for the given URL
 
@@ -577,7 +574,7 @@ class GoogleTrendsScraper:
         while button is None:
             try:
                 # Navigate to the URL
-                self.go_to_url(url)
+                # # # self.go_to_url(url)
                 # # # print(self.browser.page_source)
                 # # # time.sleep(1000)
                 # Sleep the code by the defined time plus a random number of seconds between 0s and 2s. This should
